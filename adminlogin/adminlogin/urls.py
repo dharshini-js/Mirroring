@@ -17,8 +17,11 @@ Including another URLconf
 from django.urls import path
 from login import views  
 from uploadvideo import views as uploadvideo_views  
+from devices import views as devies_data
 
 urlpatterns = [
     path('admin/login/', views.adminLoginApi, name='admin-login-api'),  
     path('media/', uploadvideo_views.upload, name='media_list'),  
+    path('devices/',devies_data.DevicesApi,name='devies_data')
+    
 ]
