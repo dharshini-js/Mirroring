@@ -1,0 +1,7 @@
+from rest_framework import serializers
+from .models import Store_media
+
+class MediaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Store_media
+        fields = '__all__'

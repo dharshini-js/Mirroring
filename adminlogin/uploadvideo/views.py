@@ -1,10 +1,12 @@
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Media
 from .serializers import MediaSerializer
 
 @api_view(['GET', 'POST','DELETE'])
+@permission_classes([AllowAny]) 
 def upload(request):
     if request.method == 'GET':
         media = Media.objects.all()
@@ -12,7 +14,6 @@ def upload(request):
         return Response(serializer.data)
 
     elif request.method == 'POST':
-       
         photo_url = request.data.get('photo_url')  
         if Media.objects.filter(photo_url=photo_url).exists():  
             return Response("This link already exists.", status=status.HTTP_400_BAD_REQUEST)
@@ -21,7 +22,6 @@ def upload(request):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
     elif request.method == 'DELETE':
         media_id = request.data.get('id')  

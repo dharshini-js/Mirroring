@@ -1,3 +1,4 @@
+from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -29,7 +30,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'login.apps.LoginConfig',
     'uploadvideo.apps.UploadvideoConfig',
-    'devices.apps.DevicesConfig'
+    'devices.apps.DevicesConfig',
+    'media.apps.MediaConfig'
 ]
 
 MIDDLEWARE = [
@@ -99,6 +101,24 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',  
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',  
+    ],
+}
+
+
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),  
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),     
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': True,
+}
+
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
@@ -123,5 +143,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ORIGIN_ALLOW_ALL  = True
 CORS_ALLOW_ALL_HEADERS =True
+CSRF_COOKIE_HTTPONLY = False  
+CSRF_COOKIE_NAME = "csrftoken"
 
 
